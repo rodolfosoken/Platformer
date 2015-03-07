@@ -22,12 +22,17 @@ public class PlayerBehaviour : MonoBehaviour {
     private bool onGround;
     private float yPrevious;
 
+    //verifica se ira colidir com uma parede
+    private bool collidingWall;
+
 	// Use this for initialization
 	void Start () {
         shouldJump = false;
         xMove = 0.0f;
         onGround = false;
         yPrevious = Mathf.Floor(transform.position.y);
+
+        collidingWall = false;
 	
 	}
 	
@@ -50,7 +55,13 @@ public class PlayerBehaviour : MonoBehaviour {
 
     void Movement()
     {
+        //pega o movimento: -1 para esquerda, +1 para direita, 0 nada
         xMove = Input.GetAxis("Horizontal");
+
+        if (collidingWall && !onGround)
+        {
+            xMove = 0;
+        }
 
         if (xMove != 0)
         {
@@ -132,5 +143,16 @@ public class PlayerBehaviour : MonoBehaviour {
         yPrevious = Mathf.Floor(transform.position.y);
     }
 
+    void OnCollisionEnter(Collision collision)
+    {
+        if (!onGround)
+        {
+            collidingWall = true;
+        }
+    }
+    void OnCollisionExit(Collision collision)
+    {
+        collidingWall = false;
+    }
 
 }
