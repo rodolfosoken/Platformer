@@ -72,8 +72,7 @@ public class PlayerBehaviour : MonoBehaviour {
             {
                 Vector3 movementForce = new Vector3(1, 0, 0);
                 movementForce *= xMove * speed;
-                rigidbody.AddForce(movementForce);
-
+                
                 //melhora colisão com a parede
                 RaycastHit hit;
                 if (!rigidbody.SweepTest(movementForce, out hit, 0.05f))
